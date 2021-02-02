@@ -645,8 +645,8 @@
     "relativePath": "res\\sound\\leveup.mp3"
   },
   "d5689f6b-d9e3-430f-bdb1-dac6c57ac3f7": {
-    "asset": 1612117395530,
-    "meta": 1612273421445,
+    "asset": 1612273473662,
+    "meta": 1612274148308,
     "relativePath": "Script"
   },
   "f8cc94db-857b-4ff0-a3b8-aea80dd403b8": {
@@ -750,8 +750,8 @@
     "relativePath": "Script\\GameSc.ts"
   },
   "989d41bf-e39b-4b3c-8c75-58c69ff03038": {
-    "asset": 1612273461082,
-    "meta": 1612273461084,
+    "asset": 1612273473661,
+    "meta": 1612274148311,
     "relativePath": "Script\\Component"
   },
   "b561f076-8a71-4a7d-bfcf-1a39c8a5257b": {
