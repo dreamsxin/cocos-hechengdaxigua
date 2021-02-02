@@ -6,7 +6,7 @@ enum GameState {
     start, gaming, over
 }
 @ccclass
-export default class GameSc extends cc.Component {
+export default class GameUI extends cc.Component {
 
     @property(cc.Label)
     scoreLabel: cc.Label = null;
@@ -33,12 +33,17 @@ export default class GameSc extends cc.Component {
     public set score(v: number) {
         this._score = v;
         this.scoreLabel.string = v.toFixed(0);
+        if (this._score > GData.get('maxScore')) {
+            GData.set('maxScore', this._score);
+            GSdk.sub.uploadScore(this._score);
+        }
     }
 
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
         cc.director.getPhysicsManager().gravity = cc.v2(0, -1280);
 
+        GData.init();
         GSdk.init();
     }
 
@@ -231,5 +236,20 @@ export default class GameSc extends cc.Component {
         cc.find('Canvas/WinUI').active = false;
         GSdk.interstitial.show();
     }
+
+    onBtn(evt, str) {
+        switch (str) {
+            case 'openRank':
+                GCocos.show('rankUI');
+                break;
+            case 'closeRank':
+                GCocos.hide('rankUI');
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
 

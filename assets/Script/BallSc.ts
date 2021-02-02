@@ -1,5 +1,5 @@
 
-import GameSc from "./GameSc";
+import GameUI from "./GameUI";
 
 const { ccclass, property } = cc._decorator;
 
@@ -13,9 +13,9 @@ export default class BallSc extends cc.Component {
     /** 是不是丢出去的,影响声音处理 */
     isDrop = false;
     start() {
-        this.getComponent(cc.PhysicsCollider).restitution = 0.1;       
+        this.getComponent(cc.PhysicsCollider).restitution = 0.1;
     }
-    
+
     onBeginContact(contact, selfCollider: cc.PhysicsCollider, otherCollider: cc.PhysicsCollider) {
         if (otherCollider.getComponent(BallSc)) {
             this.isNotCheckOver = true;
@@ -27,14 +27,14 @@ export default class BallSc extends cc.Component {
                     target = otherCollider;
                     other = selfCollider;
                 }
-                if(cc.find('Canvas/GameSc').getComponent(GameSc).BallLevelUp(target.node, other.node)){
+                if (cc.find('Canvas/GameUI').getComponent(GameUI).BallLevelUp(target.node, other.node)) {
                     other.node.removeComponent(BallSc);
                 }
             }
         } else if (!this.isDrop) {
             //仅响一次
             this.isDrop = true;
-            cc.game.emit('game-ball-drop');   
+            cc.game.emit('game-ball-drop');
         }
     }
 }

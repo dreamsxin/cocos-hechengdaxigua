@@ -70,6 +70,13 @@ export class GSdk {
             });
         }
     };
+    //轻微震动
+    vibrateShort() {
+        window['wx'] && window['wx'].vibrateShort({ type: 'medium' });//震动强度类型，有效值为：heavy、medium、light
+    };
+    vibrateLong() {
+        window['wx'] && window['wx'].vibrateLong();
+    };
     video = {
         isInit: false,
         errCode: false,
@@ -144,59 +151,28 @@ export class GSdk {
             this.item && this.item.show();
         }
     };
-    storage = {
-        _cache: {},
-        set(key, value) {
-            if (typeof key === 'string' && typeof value !== 'undefined') {
-                try {
-                    let data = JSON.stringify(value);
-                    cc.sys.localStorage.setItem(key, data);
-                    // 设置缓存
-                    this._cache[key] = data;
-                    return true;
-                } catch (err) {
-
-                }
-            } else {
-                cc.error('error');
-            }
-            return false;
+    //子域通信
+    sub = {
+        showRank(node) {
+            window['wx'] && window['wx'].getOpenDataContext().postMessage({
+                event: 'updateViewPort',
+                box: node.getBoundingBoxToWorld(),,
+                winSize: cc.winSize,
+            });
         },
-        get(key) {
-            // 先读取缓存
-            if (typeof this._cache[key] !== 'undefined') {
-                return JSON.parse(this._cache[key]);
-            }
-            let result = null;
-            try {
-                let data = cc.sys.localStorage.getItem(key);
-                if (data && typeof data === 'string') {
-                    // 设置缓存
-                    this._cache[key] = data;
-                    result = JSON.parse(data);
-                } else if (data !== '' && data !== null) {
-                    result = undefined;
-                }
-            } catch (e) {
-                result = undefined;
-            }
-            return result;
-        },
-        clear() {
-            try {
-                cc.sys.localStorage.clear();
-                cc.js.clear(this._cache);
-                return true;
-            } catch (err) {
-                return false;
-            }
+        //上传分数
+        uploadScore(score: number) {
+            window['wx'] && window['wx'].getOpenDataContext().postMessage({
+                event: 'score',
+                score: score,
+            });
         }
-    };
+    }
 }
 /**暴露全局提示 */
 declare global {
     /**
-     * 视频广告模块
+     * wx sdk模块
      */
     const GSdk: GSdk;
 }

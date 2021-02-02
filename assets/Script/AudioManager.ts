@@ -15,8 +15,8 @@ export default class AutoManager extends cc.Component {
 
         cc.game.on('game-ball-levelup', () => {
             cc.audioEngine.playEffect(this.leveUpClip, false);
+            GSdk.vibrateShort();
         });
     }
 
-    // update (dt) {}
 }

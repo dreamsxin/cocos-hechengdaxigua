@@ -11,47 +11,42 @@ export default class BannerShow extends cc.Component {
     channel: string = 'wx';
     @property
     adUnitIdBanner: string = null;
-    @property
-    updateTime: number = null;
 
-    private _instance: any = null;
+    private updateTime: number = 50;
     private noBanner: boolean = false;
     private _bannerAd: any = null; //banner缓存池
     private _poolMax: number = 10;
     private _pool: any[] = [];
     onLoad() {
-        if (window[this.channel] && this.adUnitIdBanner) {
-            this.bannerCreator();
-        }
+        this.bannerCreator();
     }
 
     onEnable() {
-        if (window[this.channel] && this.adUnitIdBanner) {
+        this.bannerShow();
+        this.schedule(() => {
             this.bannerShow();
             this.bannerCreator();
-        }
+        }, this.updateTime);
     }
     onDisable() {
-        if (window[this.channel] && this.adUnitIdBanner) {
-            this.bannerHide();
-        }
+        this.unscheduleAllCallbacks();
+        this.bannerHide();
     }
 
     bannerCreator() {
-        if (this._pool.length > this._poolMax) {
+        if (this._pool.length > this._poolMax || this.noBanner) {
             return;
         }
-        let banner = window[this.channel].createBannerAd({ adUnitId: this.adUnitIdBanner, style: { left: 0, top: 0, width: 300, } });
-        banner.onError((res) => {
-            console.log('[banner] onError', res);
-            this.noBanner = true;
-        });
-        banner.onLoad(() => {
-            this._pool.unshift(banner);//添加到数组的第一个
-            if (this.node.active && !this._bannerAd) {
-                this.bannerShow();
-            }
-        });
+        if (window[this.channel] && this.adUnitIdBanner) {
+            let banner = window[this.channel].createBannerAd({ adUnitId: this.adUnitIdBanner, style: { left: 0, top: 0, width: 360, } });
+            banner.onError((res) => { this.noBanner = true; });
+            banner.onLoad(() => {
+                this._pool.unshift(banner);//添加到数组的第一个
+                if (this.node.active && !this._bannerAd) {
+                    this.bannerShow();
+                }
+            });
+        }
     }
 
     bannerShow() {
