@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "deadling",
+    "texture": "6fa6dcdb-aa25-4465-a1b4-2251079a70d8",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      711,
+      8
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      711,
+      8
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

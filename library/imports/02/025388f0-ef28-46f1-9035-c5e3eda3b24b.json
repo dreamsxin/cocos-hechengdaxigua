@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "water",
+    "texture": "48def571-1406-4d36-aa9e-500193fbca2a",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      294,
+      320
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      294,
+      320
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
